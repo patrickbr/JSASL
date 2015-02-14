@@ -21,21 +21,21 @@ var printer;
 
 saslInit = function() {
   sasler = new sasl.Sasl();
-    printer = new sasl.Printer();
-    };
+  printer = new sasl.Printer();
+};
 
-    var res = sasler.compileAndReduce('def a x = x*x . a 2');
-    // now print the result
-    var res;
-    printer.print(res, 10,
-      function(val) {
-          res += val
-            }
-            );
-            ```
-            Important: you have to define ```saslInit()```, as it is called as soon as the SASL classes are available.
+var res = sasler.compileAndReduce('def a x = x*x . a 2');
+// now print the result
+var res;
+printer.print(res, 10,
+  function(val) {
+    res += val
+  }
+);
+```
+Important: you have to define ```saslInit()```, as it is called as soon as the SASL classes are available.
 
-            ## Known issues
-            * On-the-fly reduction machine error messages are cryptic, to say the last
-            * The reduction machine makes heavy use of recursion and is not executed asynchronously. Lists, however, are evaluted asynchronously and should not freeze the browser.
-            * Firefox seems to have problems with recursion-heavy calculations
+## Known issues
+* On-the-fly reduction machine error messages are cryptic, to say the last
+* The reduction machine makes heavy use of recursion and is not executed asynchronously. Lists, however, are evaluted asynchronously and should not freeze the browser.
+* Firefox seems to have problems with recursion-heavy calculations
