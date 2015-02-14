@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" language="javascript" src="saslcompiler.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700,900|Inconsolata|Droid+Serif:400,400italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <script type="text/javascript" src='script.js' language="javascript"></script>
+    <title>SASLCompiler</title>
+  </head>
+  <body>
+  <div id='left'>
+    <div id='title'>
+      JSASL
+    </div>
+    <div id='desc'>
+      A parser, compiler and reducer for a lightweight version of the <a href = "http://en.wikipedia.org/wiki/SASL_(programming_language)">SASL programming language</a>. Written in Java, compiled to JS.
+    </div>
+    <div id='buttons'>
+    	<button onclick='eval()' id="evalbut" type="button"><i class="fa fa-play"></i></button>
+	    <button onclick='cancel()' style="display:none" id="cancelbut" type="button"><i class="fa fa-close"></i></button>
+	  </div>
+	  <div id='impr'>
+      2015 P. Brosi
+    </div>
+  </div>
+  <div id='right'>
+	  <textarea id="texta"></textarea>
+	  <textarea id="textaresult" disabled></textarea>
+	  <div id='loadbuttons'>
+	    <button onclick='load("associativity")' type="button">associativity</button>
+	    <button onclick='load("scopes")' type="button">scopes</button>
+	    <button onclick='load("faculty")' type="button">faculty</button>
+	    <button onclick='load("hanoi")' type="button">hanoi</button>
+	    <button onclick='load("naturals")' type="button">naturals</button>
+	    <button onclick='load("primesieve")' type="button">primesieve</button>
+	    <button onclick='load("funcInLine")' type="button">funcInLine</button>
+	    <button onclick='load("listat")' type="button">list at</button>
+	    <button onclick='load("dropTake")' type="button">dropTake</button>
+	    <button onclick='load("append")' type="button">listAppend</button>
+	    <button onclick='load("reverse")' type="button">listReverse</button>
+	    <button onclick='load("sort")' type="button">sort</button>
+	    <button onclick='load("mccarthy")' type="button">mccarthy 91</button>
+	    <button onclick='load("ackermann")' type="button">ackermann</button>
+	    <button onclick='load("stringimplode")' type="button">stringimplode</button>
+	  </div>
+	  <div style="clear:both"></div>
+	</div>
+	<div id="msg" style="display:none">
+	  <div id="msgInner"></div>
+	  <button onclick='hideMsg()' type="button"><i class="fa fa-check"></i></button>
+	</div>
+  </body>
+</html>

@@ -1,0 +1,128 @@
+var sasler;
+var printer;
+
+saslInit = function() {
+  sasler = new sasl.Sasl();
+  printer = new sasl.Printer();
+  // default code
+  load("primesieve");
+};
+
+function eval() {
+  cancel();
+  switchButtons(true);
+  var val = document.getElementById('texta').value;
+  document.getElementById('textaresult').value = '';
+
+  window.setTimeout(function() {
+    try {
+      var res = sasler.compileAndReduce(val, function(error) {
+        showMsg(error);
+        switchButtons(false);
+      });
+
+      if (res) {
+        printer.print(res, 1,
+          function(val) {
+            // on val print
+            document.getElementById('textaresult').value += val
+          },
+          function(error) {
+            // on error
+            showMsg(error);
+            switchButtons(false);
+          },
+          function() {
+            // on finish
+            switchButtons(false);
+          }
+        );
+      } else {
+        // on no ros
+        switchButtons(false);
+      }
+    } catch(e) {
+      // on exception
+      showMsg(e);
+      switchButtons(false);
+    }
+  }, 100);
+}
+
+function switchButtons(started) {
+  if (started) {
+    document.getElementById('cancelbut').style.display = 'block';
+    document.getElementById('evalbut').innerHTML = '<i class="fa fa-circle-o-notch fa-spin"></i>';
+    document.getElementById('evalbut').className = 'running';
+  } else {
+    document.getElementById('cancelbut').style.display = 'none';
+    document.getElementById('evalbut').innerHTML = '<i class="fa fa-play"></i>';
+    document.getElementById('evalbut').className = '';
+  }
+}
+
+function cancel() {
+  printer.cancel();
+  switchButtons(false);
+}
+
+function showMsg(msg) {
+  document.getElementById('msgInner').innerHTML = msg;
+  document.getElementById('msg').style.display = 'block';
+}
+
+function hideMsg() {
+  document.getElementById('msg').style.display = 'none';
+}
+
+function load(what) {
+  var str;
+  switch(what) {
+    case 'associativity':
+      str = '1+1*2 = 3';
+      break;
+    case 'primesieve':
+      str = 'def take n l = if n=0 or l=nil then nil\nelse x:take (n-1) xs where x = hd l;\nxs = tl l\ndef mod x y = (x - (x/y)*y)\ndef primes = sieve (naturals 2)\n\ndef sieve input = (hd input) : (sieve (removeFromList (tl input) (hd input)))\n\ndef removeFromList list ele =if (mod (hd list) ele) = 0\nthen (removeFromList (tl list) ele)\n                        else (hd list) : (removeFromList (tl list) ele)\n\ndef naturals x = x : (naturals (x+1))\n\n.\n\ntake 20 primes';
+      break;
+    case 'funcInLine':
+      str = 'def id x = x\ndef until p f x = if p x then x else until p f (f x)\ndef comp f g x = f (g x)\ndef map f l = if l=nil then nil\nelse (f x):(map f xs) where x = hd l;\n				xs = tl l\ndef fold m z l = if l=nil then z			\n	else m x (fold m z xs) where x = hd l;	\n					 xs = tl l\ndef append l1 l2 = if l1=nil then l2			\n	else x:(append xs l2) where x = hd l1;		\n					xs = tl l1\ndef reverse l = if l=nil then nil		\n	else append (reverse (tl l)) ((hd l):nil)		\ndef filter p l = if l=nil then nil\n\n	else (if p x then x:(filter p xs)	\n	else filter p xs) where x = hd l;			\n			   xs = tl l	\ndef sort p l = if l=nil then nil			\n	else insert p (hd l) (sort p (tl l))			\n	where				\n	insert pp e ll = if ll=nil then (e:nil)		\n		else			\n		if pp e (hd ll) then (e:ll)		\n		else			\n		((hd ll):(insert pp e (tl ll)))	\ndef drop n l = if n<=0 then l				\n	else if l=nil then nil	\n	else drop (n-1) (tl l)		\ndef take n l = if n=0 or l=nil then nil		\n	else x:take (n-1) xs where x = hd l;		\n				   xs = tl l	\ndef at n l = if n=0 then hd l				\n	else at (n-1) (tl l)	\ndef null l = l=nil			\ndef length l = if l=nil then 0			\n	else 1+(length(tl l))			\ndef sum = fold plus 0		\ndef product = fold times 1			\ndef plus x y = x+y	\ndef mul x y = x*y			\ndef div x y = x/y			\ndef div2 y x = y/x\ndef minus x y = x-y\ndef minus2 y x = y-x\ndef lt x y = x<y		\ndef leq x y = x<=y				\ndef eq x y = x=y				\ndef geq x y = x>=y	\ndef gt x y = x>y\ndef mod x y = (x - (x/y)*y)\n.\nat 0 a (at 1 a 4 1) 2 where a = [plus,minus]';
+      break;
+    case 'dropTake':
+      str = 'def drop n l = if n<=0 then l		\n	else if l=nil then nil				\n	else drop (n-1) (tl l)	\ndef take n l = if n=0 or l=nil then nil			\n	else x:take (n-1) xs where x = hd l;	\n				   xs = tl l\n\n  def append l1 l2 = if l1=nil then l2			\n	else x:(append xs l2) where x = hd l1;		\n					xs = tl l1				   \n\ndef list = [1,2,3,4,5,6,7,8,9,10]\n.\n\nappend (take 4 list) (drop 4 list)';
+      break;
+    case 'append':
+      str = 'def append l1 l2 = if l1=nil then l2	\n	else x:(append xs l2) where x = hd l1;		\n					xs = tl l1			\n.					\nappend [1,2] [3,4] ';
+      break;
+    case 'reverse':
+      str = 'def reverse l = if l=nil then nil		\n  else append (reverse (tl l)) ((hd l):nil)\ndef append l1 l2 = if l1=nil then l2		\n	else x:(append xs l2) where x = hd l1;\n\n					xs = tl l1					\n.	\nreverse [1,2,3]';
+      break;
+    case 'sort':
+      str = 'def sort p l = if l=nil then nil			\n	else insert p (hd l) (sort p (tl l))	\n	where			\n	insert pp e ll = if ll=nil then (e:nil)		\n		else	\n		if pp e (hd ll) then (e:ll)		\n		else					\n		((hd ll):(insert pp e (tl ll)))			\n.		\n\nsort p [2,6,5,4,453,8,565,1337,9,1000,-44] where p x y = x<y';
+      break;
+    case 'naturals':
+      str = 'def take n l = if n=0 or l=nil then nil\nelse x:take (n-1) xs where x = hd l;\nxs = tl l\n\ndef naturals x = x : (naturals (x+1))\n\n.\n\ntake 500 (naturals start) where start = 1';
+      break;
+    case 'scopes':
+      str = 'def a x = b where b=c where c=d where d=e where e=x where x=y;y=23\ndef d=22\n.\n\n[a + (a where a=1) where a=c;c=d, ((a where a x=(b where b=x+(c where c=x))) 11)+1]';
+      break;
+    case 'faculty':
+      str = 'def fac x = if x>1 then ((fac(x-1))*x) else 1\n.\nfac 12';
+      break;
+    case 'hanoi':
+      str = 'def hanoi x = if x>1 then (1+(hanoi(x-1))*2) else 1\n.\nhanoi 7';
+      break;
+    case 'mccarthy':
+      str = 'def mccarthy n = if n>100 then n-10 else mccarthy(mccarthy(n+11))\n.\nmccarthy 53';
+      break;
+    case 'ackermann':
+      str = 'def ackermann m n = if m > 0 and n = 0 then (ackermann (m-1) 1) else if m > 0 and n > 0 then (ackermann (m-1) (ackermann m (n-1))) else n+1\n.\nackermann 3 3'
+      break;
+    case 'listat':
+      str = 'def at l p = if p = 0 then hd l else (at (tl l) (p-1))\n.\nat ["a", "b", "c", "d", "e", "f"] 4';
+      break;
+    case 'stringimplode':
+      str = 'def strimp_h strl tmp = if strl = nil then tmp else strimp_h (tl strl) (tmp + (hd strl))\ndef strimp strl = strimp_h strl ""\n.\nstrimp ["a", "b", "c"]';
+      break;
+  }
+  document.getElementById('texta').value = str;
+}

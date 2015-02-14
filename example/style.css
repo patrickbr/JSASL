@@ -1,0 +1,181 @@
+body, html {
+  height: 100%;
+  padding: 0px;
+  margin: 0px;
+}
+
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -moz-tap-highlight-color: rgba(0, 0, 0, 0);
+  outline: none;
+}
+
+*::-moz-focus-inner  {
+  border: 0;
+}
+
+#left {
+  width: 300px;
+  float: left;
+  background-color: rgb(33, 0, 68);
+  color: white;
+  font-family: 'Lato', sans-serif;
+}
+
+#title {
+  font-size: 30px;
+  margin:70px;
+  margin-bottom: 60px;
+  padding: 5px;
+  font-weight: bold;
+  border: solid white 2px;
+  border-radius: 10px;
+  text-align: center;
+  -webkit-transition: background-color .3s, color .3s;
+  transition: background-color .3s, color .3s;
+}
+
+#title:hover {
+  -webkit-transition: background-color .5s, color .5s;
+  transition: background-color .5s, color .5s;
+  background-color: white;
+  color: rgb(33, 0, 68);
+}
+
+#desc {
+  padding: 10px;
+  font-family: 'Droid Serif', serif;
+  line-height: 1.6;
+  letter-spacing: .5px;
+  font-style: italic;
+}
+
+#desc a,
+#desc a:visited {
+  color: white;
+  text-decoration: none;
+}
+
+#desc a:hover {
+  text-decoration: underline;
+}
+
+#right {
+  background-color: #f3f3f3;
+  margin-left: 300px;
+}
+
+#right, #left {
+  min-height:100%;
+  height:auto !important;
+  height:100%;
+  position: relative;
+}
+
+#texta, #textaresult {
+  width: 40%;
+  margin: 20px;
+  float: left;
+  font-family: Inconsolata, monospace;
+  font-size: 14px;
+  margin-bottom: 0px;
+  border: solid #999 1px;
+  resize: vertical;
+}
+
+#textaresult {
+  height: 400px;
+  background-color: #F4F4F4;
+}
+
+#texta {
+  min-height: 400px;
+}
+
+#buttons {
+  margin: 30px;
+  margin-left: 80px;
+}
+
+button {
+  border: solid white 2px;
+  height:50px;
+  width:50px;
+  border-radius:25px;
+  cursor: pointer;
+  background-color: rgb(33, 0, 68);
+  color: white;
+  font-size: 20px;
+  -webkit-transition: background-color .3s, color .3s;
+  transition: background-color .3s, color .3s;
+}
+
+button:hover {
+  -webkit-transition: background-color .5s, color .5s;
+  transition: background-color .5s, color .5s;
+  background-color: white;
+  color: rgb(33, 0, 68);
+}
+
+#msg button {
+  border-color: rgb(33, 0, 68);
+}
+
+#buttons button {
+  float: left;
+  margin-right: 15px;
+}
+
+#msg {
+  position: absolute;
+  width:400px;
+  top:30%;
+  left:40%;
+  background-color: white;
+  border: solid rgb(33, 0, 68) 2px;
+}
+
+#msg button {
+  margin: 10px;
+  float: right;
+}
+
+#msgInner {
+  padding: 10px;
+  font-family: 'Lato', sans-serif;
+}
+
+#loadbuttons {
+  width: 80%;
+  overflow: hidden;
+  padding: 20px;
+  float: left;
+}
+
+#loadbuttons button {
+  border-color: rgb(33, 0, 68);
+  border-radius: 6px;
+  width: auto;
+  font-size: 15px;
+  font-family: 'Lato', sans-serif;
+  height: 35px;
+  margin-bottom: 5px;
+  float: left;
+  margin-right: 5px;
+}
+
+#buttons #evalbut {
+  margin-left: 45px;
+}
+
+#buttons .running {
+  margin-left: 0px !important;
+}
+
+#impr {
+  position: absolute;
+  bottom:0px;
+  font-size: 11px;
+  margin: 5px;
+  color: #AAA;
+}

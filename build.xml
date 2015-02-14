@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="SaslCompiler" default="build" basedir=".">
+ 
+  <property file="build.properties" />
+
+  <path id="project.class.path">
+    <pathelement location="war/WEB-INF/classes"/>    
+    <pathelement location="${gwt.sdk}/gwt-user.jar"/>
+    <fileset dir="${gwt.sdk}" includes="gwt-dev*.jar"/>
+    <!-- Add any additional non-server libs (such as JUnit) -->
+    <fileset dir="lib" includes="*.jar"/>
+  </path>  
+
+  <target name="build" description="GWT compile to JavaScript (production mode)">
+    <java failonerror="true" fork="true" classname="com.google.gwt.dev.Compiler">
+      <classpath>
+        <pathelement location="src"/>
+        <path refid="project.class.path"/>
+        <pathelement location="${gwt.sdk}/validation-api-1.0.0.GA.jar" />
+        <pathelement location="${gwt.sdk}/validation-api-1.0.0.GA-sources.jar" />
+      </classpath>
+      <!-- add jvmarg -Xss16M or similar if you see a StackOverflowError -->
+      <jvmarg value="-Xmx256M"/>
+      <arg line="-XclosureCompiler -optimize 9 -style OBF"/>
+      <arg value="com.patrickbr.saslcompiler.Saslcompiler"/>
+    </java>
+    <mkdir dir="build"/>
+	<copyfile src="war/saslcompiler/saslcompiler.nocache.js" dest="build/saslcompiler.min.js"/>  
+	<delete dir="war" failonerror="false" />
+  </target>
+
+  <target name="clean" description="Cleans this project">
+    <delete dir="build" failonerror="false" />
+    <delete dir="gwt-unitCache" failonerror="false" />
+  </target>
+</project>
