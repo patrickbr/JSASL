@@ -1,0 +1,166 @@
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" language="javascript" src="saslcompiler.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700,900|Inconsolata|Droid+Serif:400,400italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <script type="text/javascript" src='script.js' language="javascript"></script>
+    <title>SASLCompiler</title>
+  </head>
+  <body>
+  <div id='left'>
+    <a id='title' href='http://patrickbrosi.de/jsasl' id='title'>
+      JSASL
+    </a>
+    <div id='desc'>
+      A parser, compiler and reducer for a lightweight version of the <a href = "http://en.wikipedia.org/wiki/SASL_(programming_language)">SASL</a> programming language. Written in Java, compiled to JS.
+    </div>
+	  <div id='impr'>
+      2015 P. Brosi
+      <a id="github" href="https://github.com/patrickbr/JSASL"><i class="fa fa-github"></i></a>
+    </div>
+  </div>
+  <div id='right'>
+    <div id='manual'>
+    <h2>Language manual</h2>
+    <p>
+    JSASL is a dialect of the St. Andrews Static Language. It is a turing complete, functional language with 5 basic primitive types: <em>numbers</em>, <em>strings</em>, <em>booleans</em>, <em>pairs</em> and <em>nil</em>. The code is parsed, tokenized, checked for grammar errors and than translated into a graph, which is subsequently reduced and lazily evaluated.
+    </p>
+      <div class="exampleblock">
+        <h3>Simple expressions</h3>
+        <button onclick='eval("ti1", "to1", "cancelbut1", "evalbut1")' class="evalbutton" id="evalbut1" type="button"><i class="fa fa-play"></i></button>
+        <button onclick='cancel()' style="display:none" class="cancelbutton" id="cancelbut1" type="button"><i class="fa fa-close"></i></button>
+      	<textarea class="exampleinput" id="ti1">1+2*3</textarea>
+	      <textarea class="exampleoutput" id="to1" disabled></textarea>
+        <div class="exampledesc">Simple expressions can be naturally stated. JSASL supports <code>+</code>, <code>-</code>, <code>*</code> and <code>/</code> (div, not floating point division)</div>
+      </div>
+      <div class="exampleblock">
+        <h3>Brackets</h3>
+        <button onclick='eval("ti2", "to2", "cancelbut2", "evalbut2")' class="evalbutton" id="evalbut2" type="button"><i class="fa fa-play"></i></button>
+	      <button onclick='cancel()' style="display:none" class="cancelbutton" id="cancelbut2" type="button"><i class="fa fa-close"></i></button>
+      	<textarea class="exampleinput" id="ti2">(1+(5-2) / (4/2))*3</textarea>
+	      <textarea class="exampleoutput" id="to2" disabled></textarea>
+        <div class="exampledesc">Expressions can be nested using <code>()</code>.</div>
+      </div>
+      <div class="exampleblock">
+        <h3>Strings</h3>
+        <button onclick='eval("ti3", "to3", "cancelbut3", "evalbut3")' class="evalbutton" id="evalbut3" type="button"><i class="fa fa-play"></i></button>
+	      <button onclick='cancel()' style="display:none" class="cancelbutton" id="cancelbut3" type="button"><i class="fa fa-close"></i></button>
+      	<textarea class="exampleinput" id="ti3">"hello" + " " + "world"</textarea>
+	      <textarea class="exampleoutput" id="to3" disabled></textarea>
+        <div class="exampledesc">Strings are primitive types, stated in <code>""</code> that can be concatened using <code>+</code>.</div>
+      </div>
+      <div class="exampleblock">
+        <h3>Booleans</h3>
+        <button onclick='eval("ti4", "to4", "cancelbut4", "evalbut4")' class="evalbutton" id="evalbut4" type="button"><i class="fa fa-play"></i></button>
+	      <button onclick='cancel()' style="display:none" class="cancelbutton" id="cancelbut4" type="button"><i class="fa fa-close"></i></button>
+      	<textarea class="exampleinput" id="ti4">(true and false) or not (1>2)</textarea>
+	      <textarea class="exampleoutput" id="to4" disabled></textarea>
+        <div class="exampledesc">Boolean operators are <code>and</code>, <code>or</code> and <code>not</code>. Numbers can be compared with <code>=</code>, <code><</code>, <code>></code>, <code><=</code> and <code>>=</code>. Strings and booleans also support <code>=</code>.</div>
+      </div>
+      <div class="exampleblock">
+        <h3>If-then-else</h3>
+        <button onclick='eval("ti5", "to5", "cancelbut5", "evalbut5")' class="evalbutton" id="evalbut5" type="button"><i class="fa fa-play"></i></button>
+	      <button onclick='cancel()' style="display:none" class="cancelbutton" id="cancelbut5" type="button"><i class="fa fa-close"></i></button>
+      	<textarea class="exampleinput" id="ti5">if "aa" = "ab"
+  then "that can't be right'"
+  else "seems legit"</textarea>
+	      <textarea class="exampleoutput" id="to5" disabled></textarea>
+        <div class="exampledesc">If-then-else blocks have to evaluate to something, that means the <code>else</code> branch must be present.</div>
+      </div>
+      <div class="exampleblock">
+        <h3>Definitions</h3>
+	      <button onclick='eval("ti51", "to51", "cancelbut51", "evalbut51")' class="evalbutton" id="evalbut51" type="button"><i class="fa fa-play"></i></button>
+	      <button onclick='cancel()' style="display:none" class="cancelbutton" id="cancelbut51" type="button"><i class="fa fa-close"></i></button>
+	      <textarea class="exampleinput" id="ti51">def one = 1
+.
+one</textarea>
+	      <textarea class="exampleoutput" id="to51" disabled></textarea>
+        <div class="exampledesc">Definitions can be stated before a dot <code>.</code>. They consist of the keyword <code>def</code>, a name for the definition and the assignment operator <code>=</code></div>
+      </div>
+      <div class="exampleblock">
+        <h3>Local variables</h3>
+	      <button onclick='eval("ti521", "to521", "cancelbut521", "evalbut521")' class="evalbutton" id="evalbut521" type="button"><i class="fa fa-play"></i></button>
+	      <button onclick='cancel()' style="display:none" class="cancelbutton" id="cancelbut521" type="button"><i class="fa fa-close"></i></button>
+	      <textarea class="exampleinput" id="ti521">a + b + c where a = 1; b = 2; c = 3</textarea>
+	      <textarea class="exampleoutput" id="to521" disabled></textarea>
+        <div class="exampledesc">In addition to the global definitions using <code>def</code>, variables can be locally defined by using <code>where</code>. In a <code>where</code> block, definitions are separated by <code>;</code>. Local <code>where</code> variables override global variables.</div>
+      </div>
+      <div class="exampleblock">
+        <h3>Functions</h3>
+        <button onclick='eval("ti52", "to52", "cancelbut52", "evalbut52")' class="evalbutton" id="evalbut52" type="button"><i class="fa fa-play"></i></button>
+	      <button onclick='cancel()' style="display:none" class="cancelbutton" id="cancelbut52" type="button"><i class="fa fa-close"></i></button>
+      	<textarea class="exampleinput" id="ti52">def square x = x * x
+.
+square 4</textarea>
+	      <textarea class="exampleoutput" id="to52" disabled></textarea>
+        <div class="exampledesc">Functions can be defined like any other definition. Arguments are stated after the identifier, as seen above.</div>
+      </div>
+
+      <div class="exampleblock">
+        <h3>Recursion</h3>
+        <button onclick='eval("ti53", "to53", "cancelbut53", "evalbut53")' class="evalbutton" id="evalbut53" type="button"><i class="fa fa-play"></i></button>
+	      <button onclick='cancel()' style="display:none" class="cancelbutton" id="cancelbut53" type="button"><i class="fa fa-close"></i></button>
+      	<textarea class="exampleinput" id="ti53">def fac x = if x>1 then ((fac(x-1))*x) else 1
+.
+fac 12</textarea>
+	      <textarea class="exampleoutput" id="to53" disabled></textarea>
+        <div class="exampledesc">The definition of recursive functions is straightforward.</div>
+      </div>
+      <div class="exampleblock">
+        <h3>(Loops)</h3>
+        <button onclick='eval("ti54", "to54", "cancelbut54", "evalbut54")' class="evalbutton" id="evalbut54" type="button"><i class="fa fa-play"></i></button>
+	      <button onclick='cancel()' style="display:none" class="cancelbutton" id="cancelbut54" type="button"><i class="fa fa-close"></i></button>
+      	<textarea class="exampleinput" id="ti54">def loop_h start = if 100 = start then
+  "Ended 100 iterations."
+  else (loop_h (start+1))
+def loop = loop_h 0
+.
+loop</textarea>
+	      <textarea class="exampleoutput" id="to54" disabled></textarea>
+        <div class="exampledesc">Loops have to be defined as (end-)recursive functions.</div>
+      </div>
+      <div class="exampleblock">
+        <h3>Lists</h3>
+        <button onclick='eval("ti6", "to6", "cancelbut6", "evalbut6")' class="evalbutton" id="evalbut6" type="button"><i class="fa fa-play"></i></button>
+	      <button onclick='cancel()' style="display:none" class="cancelbutton" id="cancelbut6" type="button"><i class="fa fa-close"></i></button>
+      	<textarea class="exampleinput" id="ti6">[1,2,3,4,5,6]</textarea>
+	      <textarea class="exampleoutput" id="to6" disabled></textarea>
+        <div class="exampledesc"><p>Lists are linked lists, where every node (a <em>pair</em>) consist of a value and a pointer to its successor. Lists can be defined by square brackets.</p></div>
+      </div>
+      <div class="exampleblock">
+        <h3>Lists (continued)</h2>
+        <button onclick='eval("ti7", "to7", "cancelbut7", "evalbut7")' class="evalbutton" id="evalbut7" type="button"><i class="fa fa-play"></i></button>
+	      <button onclick='cancel()' style="display:none" class="cancelbutton" id="cancelbut7" type="button"><i class="fa fa-close"></i></button>
+      	<textarea class="exampleinput" id="ti7">1:2:3:4:5:6:nil</textarea>
+	      <textarea class="exampleoutput" id="to7" disabled></textarea>
+        <div class="exampledesc"><p>A list is terminated by its last node pointing to <code>nil</code> as its successor. Instead of creating this structure implicitly by using the notation described above, lists can also be defined explicitly with the <em>cons</em> operator <code>:</code>.</p><p>Note how, in the code above, the last pair points to <code>nil</code> as its last element. The code above can be best understood by reading it as <code>1:(2:(3:(4:(5:(6:nil)))))</code>.</p></div>
+      </div>
+      <div class="exampleblock">
+        <h3>Lists (continued)</h3>
+        <button onclick='eval("ti71", "to71", "cancelbut71", "evalbut71")' class="evalbutton" id="evalbut71" type="button"><i class="fa fa-play"></i></button>
+	      <button onclick='cancel()' style="display:none" class="cancelbutton" id="cancelbut71" type="button"><i class="fa fa-close"></i></button>
+      	<textarea class="exampleinput" id="ti71">hd (tl [1,2,3])</textarea>
+	      <textarea class="exampleoutput" id="to71" disabled></textarea>
+        <div class="exampledesc"><p>The head element (the first element of a pair) can be retrieved via the built-in <code>hd</code> function. The rest of the list (the second element of a pair) can be retrieved via the built-in <code>tl</code> function.</p></div>
+      </div>
+      <div class="exampleblock">
+        <h3>Infinite lists</h3>
+        <button onclick='eval("ti8", "to8", "cancelbut8", "evalbut8")' class="evalbutton" id="evalbut8" type="button"><i class="fa fa-play"></i></button>
+	      <button onclick='cancel()' style="display:none" class="cancelbutton" id="cancelbut8" type="button"><i class="fa fa-close"></i></button>
+      	<textarea class="exampleinput" id="ti8">def naturals n = n : (naturals (n+1))
+.
+hd (tl (tl naturals 10))</textarea>
+	      <textarea class="exampleoutput" id="to8" disabled></textarea>
+        <div class="exampledesc"><p>Lists are evaluated lazily. This means that you can define lists by defining a pair where the second pair is a function constructing another pair. List elements can than be accessed without evaluating the whole list beforehand. More specifically, this means that you can define lists with <em>infinite length</em>, like the list of all natural numbers starting at <code>n</code>.</p></div>
+      </div>
+    </div>
+	</div>
+	<div id="msg" style="display:none">
+	  <div id="msgInner"></div>
+	  <button onclick='hideMsg()' type="button"><i class="fa fa-check"></i></button>
+	</div>
+  </body>
+</html>

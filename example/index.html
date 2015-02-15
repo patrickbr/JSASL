@@ -11,15 +11,15 @@
   </head>
   <body>
   <div id='left'>
-    <div id='title'>
+    <a id='title' href='http://patrickbrosi.de/jsasl' id='title'>
       JSASL
-    </div>
+    </a>
     <div id='desc'>
-      A parser, compiler and reducer for a lightweight version of the <a href = "http://en.wikipedia.org/wiki/SASL_(programming_language)">SASL programming language</a>. Written in Java, compiled to JS.
+      A parser, compiler and reducer for a lightweight version of the <a href = "http://en.wikipedia.org/wiki/SASL_(programming_language)">SASL</a> programming language. Written in Java, compiled to JS.</p><p>For a more detailed language guide, take a look <a href = "manual.html">here</a>.</p>
     </div>
     <div id='buttons'>
-    	<button onclick='eval()' id="evalbut" type="button"><i class="fa fa-play"></i></button>
-	    <button onclick='cancel()' style="display:none" id="cancelbut" type="button"><i class="fa fa-close"></i></button>
+    	<button onclick='eval("texta", "textaresult", "cancelbut", "evalbut")' class="evalbutton" id="evalbut" type="button"><i class="fa fa-play"></i></button>
+	    <button onclick='cancel()' style="display:none" id="cancelbut" class="cancelbutton" type="button"><i class="fa fa-close"></i></button>
 	  </div>
 	  <div id='impr'>
       2015 P. Brosi
