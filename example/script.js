@@ -8,11 +8,11 @@ saslInit = function() {
   load("primesieve");
 };
 
-function eval() {
+function eval(source, target, cancelbut, evalbut) {
   cancel();
-  switchButtons(true);
-  var val = document.getElementById('texta').value;
-  document.getElementById('textaresult').value = '';
+  switchButtons(true, cancelbut, evalbut);
+  var val = document.getElementById(source).value;
+  document.getElementById(target).value = '';
 
   window.setTimeout(function() {
     try {
@@ -25,7 +25,7 @@ function eval() {
         printer.print(res, 1,
           function(val) {
             // on val print
-            document.getElementById('textaresult').value += val
+            document.getElementById(target).value += val
           },
           function(error) {
             // on error
@@ -49,15 +49,23 @@ function eval() {
   }, 100);
 }
 
-function switchButtons(started) {
+function switchButtons(started, cancelbut, evalbut) {
   if (started) {
-    document.getElementById('cancelbut').style.display = 'block';
-    document.getElementById('evalbut').innerHTML = '<i class="fa fa-circle-o-notch fa-spin"></i>';
-    document.getElementById('evalbut').className = 'running';
+    document.getElementById(cancelbut).style.display = 'block';
+    document.getElementById(evalbut).innerHTML = '<i class="fa fa-circle-o-notch fa-spin"></i>';
+    document.getElementById(evalbut).className = 'evalbutton running';
   } else {
-    document.getElementById('cancelbut').style.display = 'none';
-    document.getElementById('evalbut').innerHTML = '<i class="fa fa-play"></i>';
-    document.getElementById('evalbut').className = '';
+    var buttons = document.getElementsByClassName('cancelbutton');
+    for (var i = 0; i<buttons.length; i++) {
+      var button = buttons[i];
+      button.style.display = 'none';
+    }
+    buttons = document.getElementsByClassName('evalbutton');
+    for (i = 0; i<buttons.length; i++) {
+      var button = buttons[i];
+      button.innerHTML = '<i class="fa fa-play"></i>';
+      button.className = 'evalbutton';
+    }
   }
 }
 

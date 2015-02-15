@@ -15,14 +15,7 @@ body, html {
   border: 0;
 }
 
-#left {
-  width: 300px;
-  float: left;
-  color: white;
-  font-family: 'Lato', sans-serif;
-}
-
-#title {
+#title, #title:visited {
   font-size: 30px;
   margin:70px;
   margin-bottom: 60px;
@@ -33,6 +26,9 @@ body, html {
   text-align: center;
   -webkit-transition: background-color .3s, color .3s;
   transition: background-color .3s, color .3s;
+  display: block;
+  color: white;
+  text-decoration: none;
 }
 
 #title:hover {
@@ -53,7 +49,6 @@ body, html {
 #desc a,
 #desc a:visited {
   color: white;
-  text-decoration: none;
 }
 
 #desc a:hover {
@@ -70,6 +65,14 @@ body, html {
   height:auto !important;
   height:100%;
   position: relative;
+}
+
+#left {
+  width: 300px;
+  float: left;
+  color: white;
+  font-family: 'Lato', sans-serif;
+  position: fixed;
 }
 
 #texta, #textaresult {
@@ -129,7 +132,7 @@ button:hover {
 }
 
 #msg {
-  position: absolute;
+  position: fixed;
   width:400px;
   top:30%;
   left:40%;
@@ -189,4 +192,79 @@ button:hover {
 #github {
   font-size: 25px;
   margin-left: 10px;
+}
+
+.exampleblock {
+  margin-bottom: 20px;
+}
+
+.exampleinput {
+  clear: both;
+  width: 47%;
+  min-height: 50px;
+  float: left;
+  margin-right: 1%;
+  margin-bottom: 10px;
+  font-family: Inconsolata,monospace;
+  font-size: 95%;
+}
+
+.exampleoutput {
+  min-height: 50px;
+  width: 47%;
+  float: left;
+  color: #333;
+  font-family: Inconsolata,monospace;
+  font-size: 95%;
+}
+
+#manual {
+  padding:15px;
+  width: 800px;
+  overflow: hidden;
+}
+
+#manual button {
+  display: block;
+  float: left;
+  width: 25px;
+  height: 25px;
+  font-size: 11px;
+  margin-left: 5px;
+  border-color: rgb(33, 0, 68);
+}
+
+#manual h3, #manual h2 {
+  background-color: #CFCFCF;
+  padding: 2px;
+  padding-left: 15px;
+  margin-left: -15px;
+  padding-right: 4px;
+}
+
+#manual h3 {
+  display: block;
+  float: left;
+  margin-bottom: 10px;
+}
+
+#manual h3, #manual button {
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Lato', sans-serif;
+}
+
+.exampledesc {
+  padding-bottom: 5px;
+  clear: both;
+}
+
+code {
+  background-color: #DDD;
+  font-weight: bold;
+  border-radius: 2px;
+  padding: 3px 4px 3px 4px;
 }
