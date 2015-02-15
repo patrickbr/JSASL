@@ -36,6 +36,6 @@ printer.print(res, 10,
 Important: you have to define ```saslInit()```, as it is called as soon as the SASL classes are available.
 
 ## Known issues
-* On-the-fly reduction machine error messages are cryptic, to say the last
+* On-the-fly reduction machine error messages are cryptic, to say the least
 * The reduction machine makes heavy use of recursion and is not executed asynchronously. Lists, however, are evaluted asynchronously and should not freeze the browser.
 * Firefox seems to have problems with recursion-heavy calculations
