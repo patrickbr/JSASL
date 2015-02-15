@@ -1,19 +1,19 @@
 # JSASL
 
-JSASL (see [example here](http://patrickbrosi.de/saslcompiler/)) is the result of my ongoing efforts to compile the [saslcompiler](https://github.com/patrickbr/saslcompiler)'s Java code to JavaScript. The code is generated using [GWT](http://www.gwtproject.org/)'s JavaScript compiler and the [Closure compiler](https://developers.google.com/closure/compiler/). The classes are exported to a native JS environment by the [GWTExporter](http://code.google.com/p/gwt-exporter/). 
+JSASL (see [example here](http://patrickbrosi.de/jsasl)) is the result of my ongoing efforts to compile the [saslcompiler](https://github.com/patrickbr/saslcompiler)'s Java code to JavaScript. The code is generated using [GWT](http://www.gwtproject.org/)'s JavaScript compiler and the [Closure compiler](https://developers.google.com/closure/compiler/). The classes are exported to a native JS environment by the [GWTExporter](http://code.google.com/p/gwt-exporter/).
 
 ## Build
-* Download and install the [latest version of GWT](http://www.gwtproject.org/download.html). 
+* Download and install the [latest version of GWT](http://www.gwtproject.org/download.html).
 * Copy `build.properties.example` to `build.proporties` and adjust to path to the GWT SDK
-* Build `saslcompiler.min.js` by 
+* Build `saslcompiler.min.js` by
 ```
 $ ant build
 ```
 
 ## Usage
 
-There is a usage example included in `/example`. This example is also available here: http://patrickbrosi.de/saslcompiler/
-Just include `saslcompiler.min.js` into your project. You can use the compiler and the reduction machine like this:
+There is a usage example included in `/example`. This example is also available here: http://patrickbrosi.de/jsasl/. A language guide can be found [here](http://patrickbrosi.de/jsasl/manual.html).
+To use the compiler in your project, just include `saslcompiler.min.js` into your project. You can use the compiler and the reduction machine like this:
 
 ```
 var sasler;
