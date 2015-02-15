@@ -2,6 +2,7 @@ body, html {
   height: 100%;
   padding: 0px;
   margin: 0px;
+  background-color: rgb(33, 0, 68);
 }
 
 * {
@@ -17,7 +18,6 @@ body, html {
 #left {
   width: 300px;
   float: left;
-  background-color: rgb(33, 0, 68);
   color: white;
   font-family: 'Lato', sans-serif;
 }
@@ -81,11 +81,13 @@ body, html {
   margin-bottom: 0px;
   border: solid #999 1px;
   resize: vertical;
+  min-width: 300px;
 }
 
 #textaresult {
   height: 400px;
   background-color: #F4F4F4;
+  color: #444;
 }
 
 #texta {
@@ -178,4 +180,13 @@ button:hover {
   font-size: 11px;
   margin: 5px;
   color: #AAA;
+}
+
+#impr a, #impr a:visited {
+  color: white;
+}
+
+#github {
+  font-size: 25px;
+  margin-left: 10px;
 }
