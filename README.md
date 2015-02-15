@@ -1,6 +1,6 @@
 # JSASL
 
-JSASL (see [example here](http://patrickbrosi.de/jsasl)) is the result of my ongoing efforts to compile the [saslcompiler](https://github.com/patrickbr/saslcompiler)'s Java code to JavaScript. The code is generated using [GWT](http://www.gwtproject.org/)'s JavaScript compiler and the [Closure compiler](https://developers.google.com/closure/compiler/). The classes are exported to a native JS environment by the [GWTExporter](http://code.google.com/p/gwt-exporter/).
+JSASL (see [example here](http://patrickbrosi.de/jsasl)) is the result of my ongoing efforts to compile the [saslcompiler](https://github.com/patrickbr/saslcompiler)'s Java code to a JavaScript library. The code is generated using [GWT](http://www.gwtproject.org/)'s JavaScript compiler and the [Closure compiler](https://developers.google.com/closure/compiler/). The classes are exported to a native JS environment by the [GWTExporter](http://code.google.com/p/gwt-exporter/).
 
 ## Build
 * Download and install the [latest version of GWT](http://www.gwtproject.org/download.html).
