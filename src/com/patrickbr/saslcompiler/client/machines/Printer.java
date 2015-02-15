@@ -59,9 +59,11 @@ public class Printer implements Exportable {
 						try {
 							Node left = ReductionMachine.reduce(((NodePair)curWork).getLeft());
 							Node right = ReductionMachine.reduce(((NodePair)curWork).getRight());		
-							if (!(right instanceof NodeNil)) {
+							if (!(right instanceof NodeNil) && right instanceof NodePair) {
 								s.push(right);
 								s.push(new StringPrintNode(","));
+							} else if (!(right instanceof NodeNil) && !(right instanceof NodePair)){
+								write("Tail of pair is not of type pair.", errorcb);
 							} else {
 								s.push(new StringPrintNode("]"));
 							}

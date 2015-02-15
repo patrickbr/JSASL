@@ -383,6 +383,7 @@ public abstract class ReductionMachine {
 					else if (function instanceof NodeDiv) {
 
 						nodeApply.setLeft(new NodeI());
+						if (yVal == 0) throw new ReduceException("Division by zero.");
 						nodeApply.setRight(new NodeNum(xVal / yVal));
 						nodeStack.push(nodeApply);
 					}
@@ -442,9 +443,9 @@ public abstract class ReductionMachine {
 			Node x =reduce(((NodeApply)nodeStack.pop()).getRight());
 			NodeApply nodeApply = (NodeApply) nodeStack.pop();
 			Node y =  reduce(nodeApply.getRight());
-
+		
 			if (x instanceof NodeNil || y instanceof NodeNil) {
-				boolean val = x instanceof NodeNil &&  x instanceof NodeNil;
+				boolean val = x instanceof NodeNil && y instanceof NodeNil;
 
 				nodeApply.setLeft(new NodeI());
 				nodeApply.setRight(new NodeBool(val));
@@ -482,6 +483,10 @@ public abstract class ReductionMachine {
 				else nodeApply.setRight(new NodeApply(new NodeI(),new NodeBool(xNum.getStringContent().equals(yNum.getStringContent()) )));
 
 				nodeStack.push(nodeApply);
+			} else if (x instanceof NodePair) {
+				throw new ReduceException("Unsupported operants for equality operator (lists cannot be explicitly compared for equality.)");
+			} else {
+				throw new ReduceException("Unsupported operants for equality operator.");
 			}
 		} 
 
