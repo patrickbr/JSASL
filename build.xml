@@ -21,7 +21,7 @@
       </classpath>
       <!-- add jvmarg -Xss16M or similar if you see a StackOverflowError -->
       <jvmarg value="-Xmx256M"/>
-      <arg line="-XclosureCompiler -optimize 9 -style OBF"/>
+      <arg line="-XclosureCompiler -logLevel TRACE -optimize 9 -style OBF"/>
       <arg value="com.patrickbr.saslcompiler.Saslcompiler"/>
     </java>
     <mkdir dir="build"/>
