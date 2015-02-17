@@ -144,7 +144,7 @@ function load(what) {
       str = 'def fibonacci n = if n < 3 then 1 else (fibonacci (n-1)) + (fibonacci (n-2))\ndef fibonaccis n = fibonacci n : fibonaccis(n+1)\ndef take n l = if n=0 or l=nil then nil	\n	else x:take (n-1) xs where x = hd l;		\n				   xs = tl l	\n.\ntake 15 (fibonaccis 1)';
       break;
     case 'collatz':
-      str = 'def mod x y = (x - (x/y)*y)\ndef collatz n = n: (if c = 1 then nil else (collatz c)) where c = if mod n 2 = 0 then n/2 else 3*n + 1\n.\ncollatz 100000';
+      str = 'def mod x y = (x - (x/y)*y)\ndef collatz n = n: (if c = 1 then nil else (collatz c)) where c = if mod n 2 = 0 then n/2 else 3*n + 1\n.\ncollatz 63728127';
       break;
 
   }
