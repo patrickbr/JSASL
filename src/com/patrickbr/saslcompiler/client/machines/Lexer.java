@@ -1,5 +1,7 @@
 package com.patrickbr.saslcompiler.client.machines;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JavaScriptObject;
 import com.patrickbr.saslcompiler.client.tokens.*;
 
 public class Lexer  {
@@ -65,7 +67,7 @@ public class Lexer  {
 	 */
 	@SuppressWarnings("deprecation")
 	private void skipWhitespaces() {
-		while ((Character.isSpace((char) (actChar = getNextChar())))){
+		while ((Character.isSpace((char) (actChar = getNextChar())))) {
 			if ((actChar == 10) || (actChar == 13 && !(lookAhead == 10))) {
 				line++;
 				pos=0;
@@ -99,7 +101,7 @@ public class Lexer  {
 			temp+=Character.toString((char)actChar);
 		}
 
-		return new TokenNum(Integer.parseInt(temp),pos,line);
+		return new TokenNum(Long.parseLong(temp),pos,line);
 	}
 
 	/*
@@ -183,7 +185,7 @@ public class Lexer  {
 			lookAhead=(int) code.charAt(sInd);
 			sInd++;
 		}
-		
+	
 		return charAt;
 	}
 }

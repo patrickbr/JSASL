@@ -29,7 +29,7 @@ public class Printer implements Exportable {
 	private void printHelper(final Node n, final int stepper, final JavaScriptObject cb, final JavaScriptObject errorcb, final JavaScriptObject then, boolean first) {
 		if (n instanceof NodeNum) {
 			NodeNum numNode = (NodeNum) n;			
-			write(Integer.toString(numNode.getNum()), cb);
+			write(numNode.getValue(), cb);
 		} else if (n instanceof NodeBool) {
 			NodeBool boolNode = (NodeBool) n;
 			write(Boolean.toString(boolNode.getBoolean()), cb);

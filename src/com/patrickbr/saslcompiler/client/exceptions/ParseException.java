@@ -8,7 +8,7 @@ public class ParseException extends Exception{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	Token atToken= new TokenEOF(0,0);
+	Token atToken = null;
 	Token expectedToken;
 	String expected;
 	Token found;
@@ -46,60 +46,58 @@ public class ParseException extends Exception{
 	private String getTokenString(Token t) {
 		if (t instanceof TokenBool) return Boolean.toString(((TokenBool)t).getBool());
 		if (t instanceof TokenString) return ((TokenString)t).getStringContent();
-		if (t instanceof TokenNum) return Integer.toString(((TokenNum)t).getNum());
-		if (t instanceof TokenEOF) return "<EOF>";
+		if (t instanceof TokenNum) return Long.toString(((TokenNum)t).getNum());
+		if (t instanceof TokenEOF) return "[EOF]";
 		if (t instanceof TokenSymbol) {
-
 			switch(((TokenSymbol) t).getType()) {
-
-			case BC: return "(";
-			case BO:return ")";
-			case SBC:return "{";
-			case SBO:return "}";
-			case COLON:return ":";
-			case COMMA:return ",";
-			case PERIOD:return ".";
-			case SEMICOLON:return ";";
-			case DEF:return "def";
-			case WHERE:return "where";
-			case IF:return "if";
-			case THEN:return "then";
-			case ELSE:return "else";
-			case NIL:return "nil";
-			case AND:return "and";
-			case OR:return "or";
-			case DIV:return "div";
-			case MULT:return "mult";
-			case MINUS:return "minus";
-			case PLUS:return "plus";
-			case HD:return "hd";
-			case TL:return "tl";
-			case NOT:return "not";
-			case EQ:return "=";
-			case NEQ:return "~=";
-			case LEQ:return "<=";
-			case LT:return "<";
-			case GEQ:return ">=";
-			case GT:return ">";
-
+				case BC: return "(";
+				case BO:return ")";
+				case SBC:return "{";
+				case SBO:return "}";
+				case COLON:return ":";
+				case COMMA:return ",";
+				case PERIOD:return ".";
+				case SEMICOLON:return ";";
+				case DEF:return "def";
+				case WHERE:return "where";
+				case IF:return "if";
+				case THEN:return "then";
+				case ELSE:return "else";
+				case NIL:return "nil";
+				case AND:return "and";
+				case OR:return "or";
+				case DIV:return "div";
+				case MULT:return "mult";
+				case MINUS:return "minus";
+				case PLUS:return "plus";
+				case HD:return "hd";
+				case TL:return "tl";
+				case NOT:return "not";
+				case EQ:return "=";
+				case NEQ:return "~=";
+				case LEQ:return "<=";
+				case LT:return "<";
+				case GEQ:return ">=";
+				case GT:return ">";
 			}
 		}
-		return "<undefinied>";
+		return "[undefined]";
 	}
 
 	public String getMessage() {
-		String temp ="<br>Error after parsing '" + getTokenString(found) + "' [" + atToken.getClass().getSimpleName() + "] @ line " + atToken.getLine() + ", pos " + (atToken.getPosition()) + " <br>";
+		String temp = "";
+		
+		if (atToken != null) temp += "<br>Error after parsing '" + getTokenString(found) + "' (" + atToken.getClass().getSimpleName() + ") @ line " + atToken.getLine() + ", pos " + (atToken.getPosition()) + " <br>";
+		else temp += "<br>Error after parsing '" + getTokenString(found) + "'<br>";
 
-		if (expectedToken !=null) {
-			temp += "(Expected: " +getTokenString(expectedToken) + ")";
-		}
-
-		else if (expected !=null) {
-			temp += "(Expected: " + expected + ")";
+		if (expectedToken != null) {
+			temp += "Expected: " + getTokenString(expectedToken) + "";
+		} else if (expected != null) {
+			temp += "Expected: " + expected + "";
 		}
 
 		if (found !=null) {
-			temp += "<br>(Found: '" + getTokenString(found) + "' [" + found.getClass().getSimpleName() + "])";
+			temp += "<br>Found: '" + getTokenString(found) + "' (" + found.getClass().getSimpleName() + ")";
 		}
 		return temp;
 	}

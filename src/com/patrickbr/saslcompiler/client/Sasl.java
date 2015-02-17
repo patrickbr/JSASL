@@ -31,6 +31,8 @@ public class Sasl implements Exportable {
 			call(errorcb, e.getMessage());
 		} catch(ClassCastException e) {
 			call(errorcb, e.getMessage());
+		} catch(NumberFormatException e) {
+			call(errorcb, "Wrong number format (maybe number is too big?) (" + e.getMessage() + ")");
 		}  		
 		return null;
 	}

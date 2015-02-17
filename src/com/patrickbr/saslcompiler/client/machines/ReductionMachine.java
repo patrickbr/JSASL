@@ -347,8 +347,8 @@ public abstract class ReductionMachine {
 				expectNum(function,xx);
 
 				NodeNum x = (NodeNum) xx;
-				int xVal = x.getNum();
-				int yVal=0;
+				long xVal = x.getNum();
+				long yVal=0;
 
 				if (function instanceof NodePlus && nodeStack.isEmpty()){
 

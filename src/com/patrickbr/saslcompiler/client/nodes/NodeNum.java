@@ -1,9 +1,9 @@
 package com.patrickbr.saslcompiler.client.nodes;
 
 public class NodeNum extends Node {
-	int num;
+	long num;
 	
-	public NodeNum(int num) {		
+	public NodeNum(long num) {		
 		super("num");
 		this.num=num;		
 	}
@@ -16,7 +16,7 @@ public class NodeNum extends Node {
 		return true;
 	}
 	
-	public int getNum() {
+	public long getNum() {
 		return num;
 	}
 
@@ -25,6 +25,6 @@ public class NodeNum extends Node {
 	}
 
 	public String getValue() {
-		return Integer.toString(num);
+		return Long.toString(num);
 	}	
 }

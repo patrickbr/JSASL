@@ -1,14 +1,14 @@
 package com.patrickbr.saslcompiler.client.tokens;
 
 public class TokenNum extends Token {
-	private int num;
+	private long num;
 
-	public TokenNum(int num, int position,int line) {
+	public TokenNum(long num, int position, int line) {
 		super(position,line);
 		this.num=num;
 	}
 
-	public int getNum() {
+	public long getNum() {
 		return num;
 	}
 }

@@ -21,7 +21,6 @@ public class Parser {
 	//list of all definitions. last entry is main
 	private ArrayList<Definition> definitions = new ArrayList<Definition>();
 
-
 	public ArrayList<Definition> parse(Lexer lex) throws ParseException  {
 		this.lex=lex;
 
@@ -30,12 +29,13 @@ public class Parser {
 
 		haupt.setAbstraction(main);
 		definitions.add(haupt);
+	
 		return definitions;
 	}
 	
 	public ArrayList<Definition> parseInclude(Lexer lex) throws ParseException  {
 		this.lex=lex;
-		check(new TokenSymbol(tokenType.DEF,0,0));
+		check(new TokenSymbol(tokenType.DEF, actToken.getPosition(), actToken.getLine()));
 		evIncludeFuncDef();
 		return definitions;
 	}
@@ -47,13 +47,13 @@ public class Parser {
 		if (nextTokenIsSymbolTokenType(TokenSymbol.tokenType.DEF)) {
 			fetchNextToken();
 			evFuncDef();	
-			check(new TokenSymbol(tokenType.PERIOD,0,0));
+			check(new TokenSymbol(tokenType.PERIOD,actToken.getPosition(), actToken.getLine()));
 		}
 
 		Node expression = evExpr();
 
-		if (expression == null) throw new ParseException("<expression>");
-		if (moreTokens()) throw new ParseException(fetchPreviousToken(), "<EOF>", getLookAhead());
+		if (expression == null) throw new ParseException(actToken, "[expression]");
+		if (moreTokens()) throw new ParseException(actToken, "[EOF]", getLookAhead());
 
 		return expression;
 	}
@@ -62,7 +62,7 @@ public class Parser {
 		definitions.add(evDef());
 
 		if (!nextTokenIsSymbolTokenType(TokenSymbol.tokenType.PERIOD)) {
-			check(new TokenSymbol(tokenType.DEF,0,0));
+			check(new TokenSymbol(tokenType.DEF,actToken.getPosition(), actToken.getLine()));
 			evFuncDef();	
 		}
 	}
@@ -71,14 +71,14 @@ public class Parser {
 		definitions.add(evDef());
 		
 		if (!(getLookAhead() instanceof TokenEOF)) {
-			check(new TokenSymbol(tokenType.DEF,0,0));
+			check(new TokenSymbol(tokenType.DEF,actToken.getPosition(), actToken.getLine()));
 			evIncludeFuncDef();	
 		}
 	}
 	
 	private Definition evDef() throws ParseException {
 		String name = evName();
-		checkNull(name,"<identifier>");
+		checkNull(name,"[identifier]");
 		ArrayList<String> vars = new ArrayList<String>();
 		String var;
 
@@ -88,7 +88,7 @@ public class Parser {
 
 		Definition tempDef = new Definition(name,vars);
 		Node abstraction = evAbstraction();
-		checkNull(abstraction,"<definition body>");
+		checkNull(abstraction,"[definition body]");
 		tempDef.setAbstraction(abstraction);
 		return tempDef;
 	}
@@ -116,7 +116,6 @@ public class Parser {
 		NodeWhere where =null;
 
 		if (nextTokenIsSymbolTokenType(TokenSymbol.tokenType.WHERE)) {
-
 			where = new NodeWhere();
 			fetchNextToken();
 			Definition a = evDef();
@@ -136,27 +135,25 @@ public class Parser {
 	}
 
 	private Node evCondExpr() throws ParseException {
-		checkNull(getLookAhead(), "<expression>");
+		checkNull(getLookAhead(), "[expression]");
 
 		if (nextTokenIsSymbolTokenType(TokenSymbol.tokenType.IF)) {
-
 			//IF
 			fetchNextToken();
 			Node condition = evExpr();
-			checkNull(condition,"<expression>");
+			checkNull(condition,"[expression]");
 
 			//THEN
-			check(new TokenSymbol(tokenType.THEN,0,0));
+			check(new TokenSymbol(tokenType.THEN,actToken.getPosition(), actToken.getLine()));
 			Node then = evCondExpr();
-			checkNull(then,"<expression>");
+			checkNull(then,"[expression]");
 
 			//ELSE
-			check(new TokenSymbol(tokenType.ELSE,0,0));
+			check(new TokenSymbol(tokenType.ELSE,actToken.getPosition(), actToken.getLine()));
 			Node sonst = evCondExpr();
-			checkNull(sonst,"<expression>");
+			checkNull(sonst,"[expression]");
 			return new NodeApply(new NodeApply(new NodeApply(new NodeCond(), condition),then),sonst);
-
-		}else{
+		} else {
 			return evListExpr();
 		}
 	}
@@ -166,7 +163,7 @@ public class Parser {
 		Node opExpr = evOpExpr();
 		Node listExprStrich = evListExprStrich();
 
-		checkNull(opExpr,"<expression>");
+		checkNull(opExpr, "[expression]");
 
 		if (listExprStrich != null) {
 			return new NodeApply(new NodeApply(new NodeCons(),opExpr),listExprStrich);
@@ -186,7 +183,7 @@ public class Parser {
 			if (b!= null) {
 				return new NodeApply(new NodeApply(new NodeCons(),a),b);
 			}
-			checkNull(a,"<expression>");
+			checkNull(a,"[expression]");
 			return a;
 		}
 		return null;
@@ -199,26 +196,24 @@ public class Parser {
 
 		if (opExprStrich != null) {
 			return new NodeApply(new NodeApply(new NodeOr(),conjunct),opExprStrich);
-		}else{
+		} else {
 			return conjunct;
 		}
 	}
 
 	private Node evOpExprStrich() throws ParseException {
 		if (nextTokenIsSymbolTokenType(TokenSymbol.tokenType.OR)) {
-
 			fetchNextToken();
 			Node conjunct = evConjunct();
 			Node opExprStrich = evOpExprStrich();
 
 			if (opExprStrich != null) {
 				return new NodeApply(new NodeApply(new NodeOr(),conjunct),opExprStrich);
-			}else{
+			} else {
 				return conjunct;
 			}
 		}
 		return null;
-
 	}
 
 	private Node evConjunct() throws ParseException  {
@@ -229,13 +224,10 @@ public class Parser {
 			return new NodeApply(new NodeApply(new NodeAnd(),compar),conjunctStrich);
 		}
 		return compar;
-
 	}
-
 
 	private Node evConjunctStrich()throws ParseException  {
 		if (nextTokenIsSymbolTokenType(TokenSymbol.tokenType.AND)) {
-
 			fetchNextToken();
 			Node compar = evCompar();
 			Node conjunctStrich = evConjunctStrich();
@@ -245,7 +237,6 @@ public class Parser {
 			}else{
 				return compar;
 			}
-
 		}
 		return null;
 	}
@@ -271,9 +262,7 @@ public class Parser {
 		}else{
 			return add;
 		}
-
 	}
-
 
 	private Node evAdd() throws ParseException {
 		Node mul = evMul();
@@ -285,7 +274,6 @@ public class Parser {
 		}
 
 		if (addop != null) {
-
 			Node addStrich = evAdd();
 			return new NodeApply(new NodeApply(addop,mul),addStrich);
 		}else{
@@ -295,7 +283,7 @@ public class Parser {
 
 	private Node evMul() throws ParseException {
 		Node factor = evFactor();
-		checkNull(factor,"<expression>");
+		checkNull(factor,"[expression]");
 		Node mulop= null;
 
 		if (nextTokenIsSymbolTokenType(TokenSymbol.tokenType.MULT) ||
@@ -309,7 +297,6 @@ public class Parser {
 		}else{
 			return factor;
 		}
-
 	}
 
 	private Node evFactor() throws ParseException {
@@ -319,10 +306,9 @@ public class Parser {
 				|| nextTokenIsSymbolTokenType(TokenSymbol.tokenType.PLUS)
 				|| nextTokenIsSymbolTokenType(TokenSymbol.tokenType.MINUS)
 		) {
-
 			Node prefix = evPrefix();
 			Node comb = evComb();
-			checkNull(comb,"<expression>");
+			checkNull(comb,"[expression]");
 			return new NodeApply(prefix,comb);
 		}else{
 			Node comb = evComb();
@@ -336,7 +322,7 @@ public class Parser {
 		Node tempBaum = simple;
 
 		while (moreTokens() && (nextSimple = evSimple())!= null) {
-			tempBaum = new NodeApply(tempBaum,nextSimple);
+			tempBaum = new NodeApply(tempBaum, nextSimple);
 		}
 
 		return tempBaum;
@@ -381,14 +367,14 @@ public class Parser {
 			if (nextTokenIsSymbolTokenType(TokenSymbol.tokenType.BO)) {
 				fetchNextToken();
 				Node expression = evExpr();
-				check(new TokenSymbol(tokenType.BC,0,0));
+				check(new TokenSymbol(tokenType.BC, actToken.getPosition(), actToken.getLine()));
 				return expression;
 			}
 
 		} catch (ParseException e) {
 			throw e;
 		} catch (Exception e) {
-			throw new ParseException(fetchPreviousToken(), "<simple>");
+			throw new ParseException(fetchPreviousToken(), "[simple]");
 		}
 
 		return null;
@@ -491,19 +477,18 @@ public class Parser {
 
 	private Node evListElems() throws ParseException {
 		Node expression = evExpr();
-		checkNull(expression, "<expression>");
+		checkNull(expression, "[expression]");
 
 		if (nextTokenIsSymbolTokenType(tokenType.COMMA)) {
 			fetchNextToken();
 			Node listElemsStrich = evListElems();
-			checkNull(listElemsStrich, "<expression>");
-			return new NodeApply(new NodeApply(new NodeCons(),expression),listElemsStrich);
+			checkNull(listElemsStrich, "[expression]");
+			return new NodeApply(new NodeApply(new NodeCons(), expression), listElemsStrich);
 		} else {
-			check(new TokenSymbol(tokenType.SBC,0,0));
-			return new NodeApply(new NodeApply(new NodeCons(),expression),new NodeNil());
+			check(new TokenSymbol(tokenType.SBC,actToken.getPosition(), actToken.getLine()));
+			return new NodeApply(new NodeApply(new NodeCons(), expression), new NodeNil());
 		}
 	}
-
 
 	private void check(Token tokenExpected) throws ParseException {
 		Token after = fetchPreviousToken();
@@ -514,37 +499,35 @@ public class Parser {
 		}
 
 		if (tokenExpected instanceof TokenSymbol) {
-
 			if (!((currentToken = fetchNextToken()) instanceof TokenSymbol) || (((TokenSymbol)currentToken).getType() != ((TokenSymbol)tokenExpected).getType())) {
-				throw new ParseException(currentToken, tokenExpected,fetchPreviousToken());
+				throw new ParseException(currentToken, tokenExpected, fetchPreviousToken());
 			}
-
 		} else if ((!(fetchNextToken().getClass().equals(tokenExpected.getClass())))) {
-			throw new ParseException(after, tokenExpected,fetchPreviousToken());
+			throw new ParseException(after, tokenExpected, fetchPreviousToken());
 		}
 	}
 
 	private void checkNull(Node nullNode, String expected) throws ParseException {
 		if (getLookAhead() != null)	{
-			if (nullNode ==null) throw new ParseException(fetchPreviousToken(),expected,getLookAhead());
+			if (nullNode ==null) throw new ParseException(actToken, expected, getLookAhead());
 		} else {
-			if (nullNode ==null) throw new ParseException(fetchPreviousToken(),expected);
+			if (nullNode ==null) throw new ParseException(actToken, expected);
 		}
 	}
 
 	private void checkNull(Token nullToken, String expected) throws ParseException {
 		if (getLookAhead() != null)	{
-			if (nullToken ==null) throw new ParseException(fetchPreviousToken(),expected,getLookAhead());
+			if (nullToken ==null) throw new ParseException(actToken,expected, getLookAhead());
 		} else {
-			if (nullToken ==null) throw new ParseException(fetchPreviousToken(),expected);
+			if (nullToken ==null) throw new ParseException(actToken, expected);
 		}
 	}
 
 	private void checkNull(String nullString, String expected) throws ParseException {
 		if (getLookAhead() != null)	{
-			if (nullString ==null) throw new ParseException(fetchPreviousToken(),expected,getLookAhead());
+			if (nullString ==null) throw new ParseException(actToken,expected, getLookAhead());
 		} else {
-			if (nullString ==null) throw new ParseException(fetchPreviousToken(),expected);
+			if (nullString ==null) throw new ParseException(actToken, expected);
 		}
 	}
 	
