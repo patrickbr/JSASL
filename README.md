@@ -22,15 +22,15 @@ var printer;
 saslInit = function() {
   sasler = new sasl.Sasl();
   printer = new sasl.Printer();
-};
 
-var res = sasler.compileAndReduce('def a x = x*x . a 2');
-// now print the result
-var res;
-printer.print(res, 10,
-  function(val) {
-    res += val
-  }
+  var res = sasler.compileAndReduce('def a x = x*x . a 2');
+  // now print the result
+  var res;
+  printer.print(res, 10,
+    function(val) {
+      res += val
+    }
+  };
 );
 ```
 Important: you have to define ```saslInit()```, as it is called as soon as the SASL classes are available.
