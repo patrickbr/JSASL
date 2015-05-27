@@ -86,8 +86,11 @@ function hideMsg() {
 function load(what) {
   var str;
   switch(what) {
-    case 'associativity':
+    case 'operator precedence':
       str = '1+1*2 = 3';
+      break;
+    case 'associativity':
+      str = '1*2*3*4*5 = 1*(2*(3*(4*5))) and 1+2+3+4+5 = 1+(2+(3+(4+5))) and 1+2+3+4+5 = ((((1+2)+3)+4)+5) and 1*2*3*4*5 = ((((1*2)*3)*4)*5)';
       break;
     case 'primesieve':
       str = 'def take n l = if n=0 or l=nil then nil\nelse x:take (n-1) xs where x = hd l;\nxs = tl l\ndef mod x y = (x - (x/y)*y)\ndef primes = sieve (naturals 2)\n\ndef sieve input = (hd input) : (sieve (removeFromList (tl input) (hd input)))\n\ndef removeFromList list ele =if (mod (hd list) ele) = 0\nthen (removeFromList (tl list) ele)\n                        else (hd list) : (removeFromList (tl list) ele)\n\ndef naturals x = x : (naturals (x+1))\n\n.\n\ntake 20 primes';
